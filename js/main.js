@@ -1,6 +1,15 @@
 'use strict';
 
+var NUMBERS = [1, 2, 3];
+var PRICES = [3000, 3500, 4000, 4500, 5000];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var TIMES_CHECK = ['12:00', '13:00', '14:00'];
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var PHOTOS = [
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+];
 var X_MIN = 0;
 var X_MAX = 1200;
 var Y_MIN = 130;
@@ -16,13 +25,38 @@ var getRandomValue = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
+// Функция заполнения массива адресов фотографий
+var getRandomArray = function (arr) {
+  var number = getRandomNumber(NUMBERS);
+  var arrPhotos = [];
+  for (var i = 0; i < number; i++) {
+    arrPhotos.push(arr[i]);
+  }
+  return arrPhotos;
+};
+
 // Функцию заполнения блока DOM-элементами на основе массива JS-объектов
 var createPinObjects = function (pinsCount) {
   var ArrayPins = [];
   for (var i = 0; i < pinsCount; i++) {
     var pin = {
       author: {avatar: 'img/avatars/user0' + (i + 1) + '.png'},
-      offer: {type: getRandomNumber(TYPES)},
+      offer: {
+        title: getRandomNumber(TYPES),
+        address: {
+          x: getRandomValue(X_MIN, X_MAX),
+          y: getRandomValue(Y_MIN, Y_MAX)
+        },
+        price: getRandomNumber(PRICES),
+        type: getRandomNumber(TYPES),
+        rooms: getRandomNumber(NUMBERS),
+        guests: getRandomNumber(NUMBERS),
+        checkin: getRandomNumber(TIMES_CHECK),
+        checkout: getRandomNumber(TIMES_CHECK),
+        features: getRandomNumber(FEATURES),
+        description: getRandomNumber(TYPES),
+        photos: getRandomArray(PHOTOS)
+      },
       location: {
         x: getRandomValue(X_MIN, X_MAX),
         y: getRandomValue(Y_MIN, Y_MAX)
