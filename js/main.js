@@ -21,7 +21,7 @@ var createPinObjects = function (pinsCount) {
   var ArrayPins = [];
   for (var i = 0; i < pinsCount; i++) {
     var pin = {
-      author: {avatar: 'img/avatars/user0' + i + '.png'},
+      author: {avatar: 'img/avatars/user0' + (i + 1) + '.png'},
       offer: {type: getRandomNumber(TYPES)},
       location: {
         x: getRandomValue(X_MIN, X_MAX),
