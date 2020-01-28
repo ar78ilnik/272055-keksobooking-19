@@ -1,6 +1,6 @@
 'use strict';
 
-var NUMBERS = [1, 2, 3];
+var NUMBERS = [1, 2, 3, 4, 5, 6];
 var PRICES = [3000, 3500, 4000, 4500, 5000];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var TIMES_CHECK = ['12:00', '13:00', '14:00'];
@@ -25,14 +25,14 @@ var getRandomValue = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-// Функция заполнения массива адресов фотографий
+// Функция заполнения массива случайной длины
 var getRandomArray = function (arr) {
-  var number = getRandomNumber(NUMBERS);
-  var arrPhotos = [];
+  var number = getRandomValue (arr.length);
+  var arrItems = [];
   for (var i = 0; i < number; i++) {
-    arrPhotos.push(arr[i]);
+    arrItems.push(arr[i]);
   }
-  return arrPhotos;
+  return arrItems;
 };
 
 // Функцию заполнения блока DOM-элементами на основе массива JS-объектов
@@ -50,10 +50,10 @@ var createPinObjects = function (pinsCount) {
         price: getRandomNumber(PRICES),
         type: getRandomNumber(TYPES),
         rooms: getRandomNumber(NUMBERS),
-        guests: getRandomNumber(NUMBERS),
-        checkin: getRandomNumber(TIMES_CHECK),
-        checkout: getRandomNumber(TIMES_CHECK),
-        features: getRandomNumber(FEATURES),
+        guests: getRandomArray(NUMBERS),
+        checkin: getRandomArray(TIMES_CHECK),
+        checkout: getRandomArray(TIMES_CHECK),
+        features: getRandomArray(FEATURES),
         description: getRandomNumber(TYPES),
         photos: getRandomArray(PHOTOS)
       },
