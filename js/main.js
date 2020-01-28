@@ -27,7 +27,7 @@ var getRandomValue = function (min, max) {
 
 // Функция заполнения массива случайной длины
 var getRandomArray = function (arr) {
-  var number = getRandomValue (arr.length);
+  var number = getRandomValue(1, arr.length);
   var arrItems = [];
   for (var i = 0; i < number; i++) {
     arrItems.push(arr[i]);
