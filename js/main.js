@@ -5,6 +5,12 @@ var PRICES = [3000, 3500, 4000, 4500, 5000];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var TIMES_CHECK = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var SETTYPE = {
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец'
+};
 var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
@@ -74,6 +80,21 @@ var mapPins = document.querySelector('.map__pins');
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+// Функция определения типа жилья
+var types = function (type) {
+  switch (type) {
+    case flat: 'Квартира';
+    break;
+    case bungalo: 'Бунгало';
+    break;
+    case house: 'Дом';
+    break;
+    case palace: 'Дворец';
+    break;
+  }
+  return type;
+};
+
 // Функция создания DOM-элемента на основе JS-объекта
 var renderPin = function (pinValues) {
   var pinElement = pinsTemplate.cloneNode(true);
@@ -87,8 +108,15 @@ var renderPin = function (pinValues) {
 var renderOffer = function (cardValues) {
   var cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.popup__title').textContent = cardValues.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = cardValues.offer.address.x + cardValues.offer.address.y;
+  cardElement.querySelector('.popup__text--price').textContent = cardValues.offer.price + ' ₽/ночь';
+  cardElement.querySelector('.popup__type').textContent = types(TYPES);
+  console.log(type);
+
   return cardElement;
 };
+
+renderOffer(pins[0]);
 
 var fragment = document.createDocumentFragment();
 
