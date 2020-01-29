@@ -72,6 +72,8 @@ var pins = createPinObjects(8);
 var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
 
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+
 // Функция создания DOM-элемента на основе JS-объекта
 var renderPin = function (pinValues) {
   var pinElement = pinsTemplate.cloneNode(true);
@@ -79,6 +81,13 @@ var renderPin = function (pinValues) {
   pinElement.firstChild.src = pinValues.author.avatar;
   pinElement.firstChild.alt = pinValues.offer.type;
   return pinElement;
+};
+
+// Функция создания DOM-элемента объявления на основе JS-объекта
+var renderOffer = function (cardValues) {
+  var cardElement = cardTemplate.cloneNode(true);
+  cardElement.querySelector('.popup__title').textContent = cardValues.offer.title;
+  return cardElement;
 };
 
 var fragment = document.createDocumentFragment();
