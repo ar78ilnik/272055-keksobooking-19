@@ -80,6 +80,26 @@ var mapPins = document.querySelector('.map__pins');
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+// Функция заполнения тэгов li текстовыми значениями из массива FEATURES
+var createTagContent = function (arr) {
+  var elem = cardTemplate.querySelector('.popup__features').getElementsByTagName('li');
+  for (var i = 0; i < arr.length; i++) {
+    elem[i].innerHTML = arr[i];
+  }
+  return elem;
+};
+
+// Функция заполнения атрибутов src значениями из массива PHOTOS
+var addSrcAttributtes = function (arr) {
+  var elems = cardTemplate.querySelector('.popup__photos');
+  var elem = elems.querySelector('.popup__photo');
+  for (var i = 0; i < arr.length; i++) {
+    elems[i] = cardTemplate.querySelector('.popup__photos').appendChild(elem);
+    elems[i].src = PHOTOS[i];
+  }
+  return elems;
+};
+
 // Функция создания DOM-элемента на основе JS-объекта
 var renderPin = function (pinValues) {
   var pinElement = pinsTemplate.cloneNode(true);
@@ -98,12 +118,14 @@ var renderOffer = function (cardValues) {
   cardElement.querySelector('.popup__type').textContent = SETTYPE[cardValues.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = cardValues.offer.rooms + 'комнаты' + cardValues.offer.guests + 'гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardValues.offer.checkin + ', выезд до ' + cardValues.offer.checkout;
-  cardElement.querySelector('.popup__features').textContent =
+  cardElement.querySelector('.popup__feature').innerHTML = createTagContent(FEATURES);
+  cardElement.querySelector('.popup__description').textContent = cardValues.offer.description;
+  cardElement.querySelector('.popup__photos').innerHTML = addSrcAttributtes(PHOTOS);
+  cardElement.querySelector('.popup__avatar').src = cardValues.author.avatar;
   return cardElement;
 };
 
 var card = renderOffer(pins[0]);
-console.log(card);
 
 var fragment = document.createDocumentFragment();
 
