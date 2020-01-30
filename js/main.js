@@ -93,11 +93,11 @@ var createTagContent = function (arr) {
 var addSrcAttributtes = function (arr) {
   var elems = cardTemplate.querySelector('.popup__photos');
   var elem = elems.querySelector('.popup__photo');
+  var elem2 = elem.cloneNode(true);
   for (var i = 0; i < arr.length; i++) {
-    elems[i] = cardTemplate.querySelector('.popup__photos').appendChild(elem);
-    elems[i].src = PHOTOS[i];
+    elem2.src = PHOTOS[i];
   }
-  return elems;
+  return elem2;
 };
 
 // Функция создания DOM-элемента на основе JS-объекта
@@ -126,6 +126,8 @@ var renderOffer = function (cardValues) {
 };
 
 var card = renderOffer(pins[0]);
+var map = document.querySelector('.map').querySelector('.map__filters-container');
+map.insertAdjacentElement('beforebegin', card);
 
 var fragment = document.createDocumentFragment();
 
