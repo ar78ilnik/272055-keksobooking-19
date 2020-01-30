@@ -57,8 +57,8 @@ var createPinObjects = function (pinsCount) {
         type: getRandomNumber(TYPES),
         rooms: getRandomNumber(NUMBERS),
         guests: getRandomArray(NUMBERS),
-        checkin: getRandomArray(TIMES_CHECK),
-        checkout: getRandomArray(TIMES_CHECK),
+        checkin: getRandomNumber(TIMES_CHECK),
+        checkout: getRandomNumber(TIMES_CHECK),
         features: getRandomArray(FEATURES),
         description: getRandomNumber(TYPES),
         photos: getRandomArray(PHOTOS)
@@ -80,21 +80,6 @@ var mapPins = document.querySelector('.map__pins');
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-// Функция определения типа жилья
-var types = function (type) {
-  switch (type) {
-    case flat: 'Квартира';
-    break;
-    case bungalo: 'Бунгало';
-    break;
-    case house: 'Дом';
-    break;
-    case palace: 'Дворец';
-    break;
-  }
-  return type;
-};
-
 // Функция создания DOM-элемента на основе JS-объекта
 var renderPin = function (pinValues) {
   var pinElement = pinsTemplate.cloneNode(true);
@@ -110,13 +95,15 @@ var renderOffer = function (cardValues) {
   cardElement.querySelector('.popup__title').textContent = cardValues.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = cardValues.offer.address.x + cardValues.offer.address.y;
   cardElement.querySelector('.popup__text--price').textContent = cardValues.offer.price + ' ₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = types(TYPES);
-  console.log(type);
-
+  cardElement.querySelector('.popup__type').textContent = SETTYPE[cardValues.offer.type];
+  cardElement.querySelector('.popup__text--capacity').textContent = cardValues.offer.rooms + 'комнаты' + cardValues.offer.guests + 'гостей';
+  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardValues.offer.checkin + ', выезд до ' + cardValues.offer.checkout;
+  cardElement.querySelector('.popup__features').textContent =
   return cardElement;
 };
 
-renderOffer(pins[0]);
+var card = renderOffer(pins[0]);
+console.log(card);
 
 var fragment = document.createDocumentFragment();
 
