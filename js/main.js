@@ -1,10 +1,29 @@
 'use strict';
 
-var NUMBERS = [1, 2, 3, 4, 5, 6];
-var PRICES = [3000, 3500, 4000, 4500, 5000];
-var TYPES = ['palace', 'flat', 'house', 'bungalo'];
-var TIMES_CHECK = ['12:00', '13:00', '14:00'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var MAX_NUMBER = 6;
+var MAX_PRICES = 5000;
+var X_MIN = 0;
+var X_MAX = 1200;
+var Y_MIN = 130;
+var Y_MAX = 630;
+
+var TYPES = [
+  'palace',
+  'flat',
+  'house',
+  'bungalo'];
+var TIMES_CHECK = [
+  '12:00',
+  '13:00',
+  '14:00'];
+var FEATURES = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
+];
 var SETTYPE = {
   flat: 'Квартира',
   bungalo: 'Бунгало',
@@ -16,10 +35,11 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
-var X_MIN = 0;
-var X_MAX = 1200;
-var Y_MIN = 130;
-var Y_MAX = 630;
+
+// Функция создания аватара
+function createAvatarValue(index) {
+  return 'img/avatars/user0' + index + '.png';
+}
 
 // Функции генерации случайных данных
 var getRandomNumber = function (values) {
@@ -29,6 +49,14 @@ var getRandomNumber = function (values) {
 
 var getRandomValue = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
+};
+
+var getArray = function (num) {
+  var arr = [];
+  for (var i = 0; i < num; i++) {
+    arr.push([i]);
+  }
+  return arr;
 };
 
 // Функция заполнения массива случайной длины
@@ -46,17 +74,17 @@ var createPinObjects = function (pinsCount) {
   var ArrayPins = [];
   for (var i = 0; i < pinsCount; i++) {
     var pin = {
-      author: {avatar: 'img/avatars/user0' + (i + 1) + '.png'},
+      author: {avatar: createAvatarValue(i + 1)},
       offer: {
         title: getRandomNumber(TYPES),
         address: {
           x: getRandomValue(X_MIN, X_MAX),
           y: getRandomValue(Y_MIN, Y_MAX)
         },
-        price: getRandomNumber(PRICES),
+        price: getRandomNumber(getArray(MAX_PRICES)),
         type: getRandomNumber(TYPES),
-        rooms: getRandomNumber(NUMBERS),
-        guests: getRandomArray(NUMBERS),
+        rooms: getRandomNumber(getArray(MAX_NUMBER)),
+        guests: getRandomArray(getArray(MAX_NUMBER)),
         checkin: getRandomNumber(TIMES_CHECK),
         checkout: getRandomNumber(TIMES_CHECK),
         features: getRandomArray(FEATURES),
@@ -91,13 +119,16 @@ var createTagContent = function (arr) {
 
 // Функция заполнения атрибутов src значениями из массива PHOTOS
 var addSrcAttributtes = function (arr) {
+  var fragment = new DocumentFragment();
   var elems = cardTemplate.querySelector('.popup__photos');
   var elem = elems.querySelector('.popup__photo');
-  var elem2 = elem.cloneNode(true);
+  elems.innerHTML = '';
   for (var i = 0; i < arr.length; i++) {
+    var elem2 = elem.cloneNode(true);
     elem2.src = PHOTOS[i];
+    fragment.appendChild(elem2);
   }
-  return elem2;
+  return fragment;
 };
 
 // Функция создания DOM-элемента на основе JS-объекта
@@ -120,7 +151,8 @@ var renderOffer = function (cardValues) {
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardValues.offer.checkin + ', выезд до ' + cardValues.offer.checkout;
   cardElement.querySelector('.popup__feature').innerHTML = createTagContent(FEATURES);
   cardElement.querySelector('.popup__description').textContent = cardValues.offer.description;
-  cardElement.querySelector('.popup__photos').innerHTML = addSrcAttributtes(PHOTOS);
+  cardElement.querySelector('.popup__photos').appendChild(addSrcAttributtes(PHOTOS));
+  cardElement.querySelector('.popup__photos').removeChild(cardElement.querySelector('.popup__photo'));
   cardElement.querySelector('.popup__avatar').src = cardValues.author.avatar;
   return cardElement;
 };
