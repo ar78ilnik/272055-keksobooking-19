@@ -84,7 +84,7 @@ var createPinObjects = function (pinsCount) {
         price: getRandomNumber(getArray(MAX_PRICES)),
         type: getRandomNumber(TYPES),
         rooms: getRandomNumber(getArray(MAX_NUMBER)),
-        guests: getRandomArray(getArray(MAX_NUMBER)),
+        guests: getRandomNumber(getArray(MAX_NUMBER)),
         checkin: getRandomNumber(TIMES_CHECK),
         checkout: getRandomNumber(TIMES_CHECK),
         features: getRandomArray(FEATURES),
@@ -147,7 +147,7 @@ var renderOffer = function (cardValues) {
   cardElement.querySelector('.popup__text--address').textContent = cardValues.offer.address.x + cardValues.offer.address.y;
   cardElement.querySelector('.popup__text--price').textContent = cardValues.offer.price + ' ₽/ночь';
   cardElement.querySelector('.popup__type').textContent = SETTYPE[cardValues.offer.type];
-  cardElement.querySelector('.popup__text--capacity').textContent = cardValues.offer.rooms + 'комнаты' + cardValues.offer.guests + 'гостей';
+  cardElement.querySelector('.popup__text--capacity').textContent = cardValues.offer.rooms + ' комнаты ' + cardValues.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardValues.offer.checkin + ', выезд до ' + cardValues.offer.checkout;
   cardElement.querySelector('.popup__feature').innerHTML = createTagContent(FEATURES);
   cardElement.querySelector('.popup__description').textContent = cardValues.offer.description;
