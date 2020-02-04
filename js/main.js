@@ -36,6 +36,17 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
+var mapPoint = document.querySelector('.map');
+var pinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var fields = adForm.querySelector('fieldset');
+var mapFilters = mapPoint.querySelector('.map__filters');
+
+mapPoint.classList.add('map--faded');
+adForm.classList.add('ad-form--disabled');
+mapFilters.classList.add('map__filters--disabled');
+fields.classList.add('disabled');
+
 // Функция создания аватара
 function createAvatarValue(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -172,3 +183,13 @@ for (var i = 0; i < pins.length; i++) {
 }
 
 mapPins.appendChild(fragment);
+
+// Задание 9
+
+var enableMap = function () {
+  mapPoint.classList.remove('map--faded');
+};
+
+pinMain.addEventListener('mousedown', function () {
+  enableMap();
+});
