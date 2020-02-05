@@ -177,24 +177,17 @@ var mapPoint = document.querySelector('.map');
 var pinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var fields = document.querySelectorAll('[name="fieldset"]');
-var mapFilters = mapPoint.querySelector('.map__filters');
-
-pinMain.addEventListener('mouseDown', showCoords);
-function showCoords (eventObj) {
-  var x = eventObj.clientX;
-  console.log(x);
-}
 
 mapPoint.classList.add('map--faded');
 adForm.classList.add('ad-form--disabled');
 
-for (var i = 0; fields.length; i++) {
+for (i = 0; fields.length; i++) {
   fields[i].setAttribute('disabled', 'disabled');
 }
 
 // Функция активации полей fieldset
 var toogleFields = function (arr) {
-  for (var i = 0; arr.length; i++) {
+  for (i = 0; arr.length; i++) {
     arr[i].removeAttribute('disabled');
   }
 };
@@ -214,6 +207,6 @@ pinMain.addEventListener('keydown', function (evt) {
 
 pinMain.addEventListener('mousedown', function (evt) {
   if (evt.which === 1) {
-    enableMap();   
+    enableMap();
   }
 });
