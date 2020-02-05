@@ -6,6 +6,7 @@ var X_MIN = 0;
 var X_MAX = 1200;
 var Y_MIN = 130;
 var Y_MAX = 630;
+var ENTER_KEY = 'Enter';
 
 var TYPES = [
   'palace',
@@ -35,17 +36,6 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
-
-var mapPoint = document.querySelector('.map');
-var pinMain = document.querySelector('.map__pin--main');
-var adForm = document.querySelector('.ad-form');
-var fields = adForm.querySelector('fieldset');
-var mapFilters = mapPoint.querySelector('.map__filters');
-
-mapPoint.classList.add('map--faded');
-adForm.classList.add('ad-form--disabled');
-mapFilters.classList.add('map__filters--disabled');
-fields.classList.add('disabled');
 
 // Функция создания аватара
 function createAvatarValue(index) {
@@ -174,7 +164,6 @@ var renderOffer = function (cardValues) {
 
 var card = renderOffer(pins[0]);
 var map = document.querySelector('.map').querySelector('.map__filters-container');
-map.insertAdjacentElement('beforebegin', card);
 
 var fragment = document.createDocumentFragment();
 
@@ -182,14 +171,49 @@ for (var i = 0; i < pins.length; i++) {
   fragment.appendChild(renderPin(pins[i]));
 }
 
-mapPins.appendChild(fragment);
-
 // Задание 9
+
+var mapPoint = document.querySelector('.map');
+var pinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var fields = document.querySelectorAll('[name="fieldset"]');
+var mapFilters = mapPoint.querySelector('.map__filters');
+
+pinMain.addEventListener('mouseDown', showCoords);
+function showCoords (eventObj) {
+  var x = eventObj.clientX;
+  console.log(x);
+}
+
+mapPoint.classList.add('map--faded');
+adForm.classList.add('ad-form--disabled');
+
+for (var i = 0; fields.length; i++) {
+  fields[i].setAttribute('disabled', 'disabled');
+}
+
+// Функция активации полей fieldset
+var toogleFields = function (arr) {
+  for (var i = 0; arr.length; i++) {
+    arr[i].removeAttribute('disabled');
+  }
+};
 
 var enableMap = function () {
   mapPoint.classList.remove('map--faded');
+  toogleFields(fields);
+  mapPins.appendChild(fragment);
+  map.insertAdjacentElement('beforebegin', card);
 };
 
-pinMain.addEventListener('mousedown', function () {
-  enableMap();
+pinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    enableMap();
+  }
+});
+
+pinMain.addEventListener('mousedown', function (evt) {
+  if (evt.which === 1) {
+    enableMap();   
+  }
 });
