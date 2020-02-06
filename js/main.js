@@ -193,11 +193,9 @@ var captureCoords = function (evt) {
   return [x, y];
 };
 
-var coords = captureCoords('mousedown');
-
 // Функция ввода координат в поле адреса
-var introCoords = function () {
-  address.value = coords;
+var introCoords = function (evt) {
+  address.value = captureCoords(evt);
 };
 
 // Функция активации полей fieldset
@@ -224,5 +222,5 @@ pinMain.addEventListener('mousedown', function (evt) {
   if (evt.which === 1) {
     enableMap();
   }
-  introCoords();
+  introCoords(evt);
 });
