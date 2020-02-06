@@ -207,6 +207,7 @@ var toogleFields = function (arr) {
 
 var enableMap = function () {
   mapPoint.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
   toogleFields(fields);
   mapPins.appendChild(fragment);
   map.insertAdjacentElement('beforebegin', card);
