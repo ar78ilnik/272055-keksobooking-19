@@ -6,6 +6,7 @@ var X_MIN = 0;
 var X_MAX = 1200;
 var Y_MIN = 130;
 var Y_MAX = 630;
+var ENTER_KEY = 'Enter';
 
 var TYPES = [
   'palace',
@@ -163,7 +164,6 @@ var renderOffer = function (cardValues) {
 
 var card = renderOffer(pins[0]);
 var map = document.querySelector('.map').querySelector('.map__filters-container');
-map.insertAdjacentElement('beforebegin', card);
 
 var fragment = document.createDocumentFragment();
 
@@ -171,4 +171,57 @@ for (var i = 0; i < pins.length; i++) {
   fragment.appendChild(renderPin(pins[i]));
 }
 
-mapPins.appendChild(fragment);
+// Задание 9
+
+var mapPoint = document.querySelector('.map');
+var pinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var fields = document.querySelectorAll('[name="fieldset"]');
+var address = document.querySelector('#address');
+
+mapPoint.classList.add('map--faded');
+adForm.classList.add('ad-form--disabled');
+
+for (i = 0; fields.length; i++) {
+  fields[i].setAttribute('disabled', 'disabled');
+}
+
+// Функция получения координат нажатия мыши
+var captureCoords = function (evt) {
+  var x = evt.clientX;
+  var y = evt.clientY;
+  return [x, y];
+};
+
+// Функция ввода координат в поле адреса
+var introCoords = function (evt) {
+  address.value = captureCoords(evt);
+};
+
+// Функция активации полей fieldset
+var toogleFields = function (arr) {
+  for (i = 0; arr.length; i++) {
+    arr[i].removeAttribute('disabled');
+  }
+};
+
+var enableMap = function () {
+  mapPoint.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  toogleFields(fields);
+  mapPins.appendChild(fragment);
+  map.insertAdjacentElement('beforebegin', card);
+};
+
+pinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    enableMap();
+  }
+});
+
+pinMain.addEventListener('mousedown', function (evt) {
+  if (evt.which === 1) {
+    enableMap();
+  }
+  introCoords(evt);
+});
