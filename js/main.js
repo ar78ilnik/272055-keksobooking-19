@@ -177,6 +177,7 @@ var mapPoint = document.querySelector('.map');
 var pinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var fields = document.querySelectorAll('[name="fieldset"]');
+var address = document.querySelector('#address');
 
 mapPoint.classList.add('map--faded');
 adForm.classList.add('ad-form--disabled');
@@ -184,6 +185,20 @@ adForm.classList.add('ad-form--disabled');
 for (i = 0; fields.length; i++) {
   fields[i].setAttribute('disabled', 'disabled');
 }
+
+// Функция получения координат нажатия мыши
+var captureCoords = function (evt) {
+  var x = evt.clientX;
+  var y = evt.clientY;
+  return [x, y];
+};
+
+var coords = captureCoords('mousedown');
+
+// Функция ввода координат в поле адреса
+var introCoords = function () {
+  address.value = coords;
+};
 
 // Функция активации полей fieldset
 var toogleFields = function (arr) {
@@ -209,4 +224,5 @@ pinMain.addEventListener('mousedown', function (evt) {
   if (evt.which === 1) {
     enableMap();
   }
+  introCoords();
 });
