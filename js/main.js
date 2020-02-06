@@ -129,7 +129,7 @@ var addSrcAttributtes = function (arr) {
   elems.innerHTML = '';
   for (var i = 0; i < arr.length; i++) {
     var elem2 = elem.cloneNode(true);
-    elem2.src = PHOTOS[i];
+    elem2.src = arr[i];
     fragment.appendChild(elem2);
   }
   return fragment;
