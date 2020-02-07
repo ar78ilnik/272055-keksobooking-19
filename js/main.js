@@ -1,6 +1,6 @@
 'use strict';
 
-var MAX_NUMBER = 6;
+var MAX_NUMBER = 2;
 var MAX_PRICES = 5000;
 var X_MIN = 0;
 var X_MAX = 1200;
@@ -53,12 +53,19 @@ var getRandomValue = function (min, max) {
 };
 
 var getArray = function (num) {
-  var arr = [];
+  var arr = [1, 2, 3, 4];
+  var newarr = [];
+  /*
   for (var i = 0; i < num; i++) {
     arr.push([i]);
   }
-  return arr;
+  */
+ arr.forEach(function(item) {
+    newarr.push(item);
+ })
+  return newarr;
 };
+console.log(getArray(MAX_NUMBER));
 
 // Функция заполнения массива случайной длины
 var getRandomArray = function (arr) {
