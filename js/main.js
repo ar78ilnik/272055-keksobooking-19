@@ -52,21 +52,23 @@ var getRandomValue = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-var getArray = function (num) {
-  var arr = [];
-  for (var i = 0; i < num; i++) {
-    arr.push([i]);
+function getArray(num) {
+  var newArr = [];
+  var i = 0;
+  while (i <= num) {
+    newArr.push(i);
+    i++;
   }
-  return arr;
-};
+  return newArr;
+}
 
 // Функция заполнения массива случайной длины
 var getRandomArray = function (arr) {
-  var number = getRandomValue(1, arr.length);
+  // var number = getRandomValue(1, arr.length);
   var arrItems = [];
-  for (var i = 0; i < number; i++) {
-    arrItems.push(arr[i]);
-  }
+  arr.forEach(function (item) {
+    arrItems.push(item);
+  });
   return arrItems;
 };
 
@@ -112,12 +114,12 @@ var cardTemplate = document.querySelector('#card').content.querySelector('.map__
 // Функция заполнения тэгов li текстовыми значениями из массива FEATURES
 var createTagContent = function (arr) {
   var fragment = new DocumentFragment();
-  for (var i = 0; i < arr.length; i++) {
+  arr.forEach(function (item) {
     var li = document.createElement('li');
     li.classList.add('popup__feature');
-    li.classList.add('popup__feature--' + arr[i]);
+    li.classList.add('popup__feature--' + item);
     fragment.appendChild(li);
-  }
+  });
   return fragment;
 };
 
@@ -127,11 +129,11 @@ var addSrcAttributtes = function (arr) {
   var elems = cardTemplate.querySelector('.popup__photos');
   var elem = elems.querySelector('.popup__photo');
   elems.innerHTML = '';
-  for (var i = 0; i < arr.length; i++) {
+  arr.forEach(function (item) {
     var elem2 = elem.cloneNode(true);
-    elem2.src = arr[i];
+    elem2.src = item;
     fragment.appendChild(elem2);
-  }
+  });
   return fragment;
 };
 
@@ -167,11 +169,9 @@ var map = document.querySelector('.map').querySelector('.map__filters-container'
 
 var fragment = document.createDocumentFragment();
 
-for (var i = 0; i < pins.length; i++) {
-  fragment.appendChild(renderPin(pins[i]));
-}
-
-// Задание 9
+pins.forEach(function (item) {
+  fragment.appendChild(renderPin(item));
+});
 
 var mapPoint = document.querySelector('.map');
 var pinMain = document.querySelector('.map__pin--main');
@@ -182,7 +182,7 @@ var address = document.querySelector('#address');
 mapPoint.classList.add('map--faded');
 adForm.classList.add('ad-form--disabled');
 
-for (i = 0; fields.length; i++) {
+for (var i = 0; i < fields.length; i++) {
   fields[i].setAttribute('disabled', 'disabled');
 }
 
@@ -200,9 +200,9 @@ var introCoords = function (evt) {
 
 // Функция активации полей fieldset
 var toogleFields = function (arr) {
-  for (i = 0; arr.length; i++) {
-    arr[i].removeAttribute('disabled');
-  }
+  arr.forEach(function (item) {
+    item.removeAttribute('disabled');
+  });
 };
 
 var enableMap = function () {
@@ -225,4 +225,3 @@ pinMain.addEventListener('mousedown', function (evt) {
   }
   introCoords(evt);
 });
-
