@@ -37,21 +37,23 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
-// Функция создания аватара
+// 1. Функция создания аватара
 function createAvatarValue(index) {
   return 'img/avatars/user0' + index + '.png';
 }
 
-// Функции генерации случайных данных
+// 2. Функции генерации случайных данных
 var getRandomNumber = function (values) {
   var index = Math.floor(Math.random() * values.length);
   return values[index];
 };
 
+// 3
 var getRandomValue = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
+// 6
 function getArray(num) {
   var newArr = [];
   var i = 0;
@@ -62,7 +64,7 @@ function getArray(num) {
   return newArr;
 }
 
-// Функция заполнения массива случайной длины
+// 5. Функция заполнения массива случайной длины
 var getRandomArray = function (arr) {
   // var number = getRandomValue(1, arr.length);
   var arrItems = [];
@@ -72,7 +74,9 @@ var getRandomArray = function (arr) {
   return arrItems;
 };
 
+// 4
 // Функцию заполнения блока DOM-элементами на основе массива JS-объектов
+// Шаблон для создания пина. Понадобится в дальнейшем для вставки в DOM
 var createPinObjects = function (pinsCount) {
   var ArrayPins = [];
   for (var i = 0; i < pinsCount; i++) {
@@ -106,12 +110,14 @@ var createPinObjects = function (pinsCount) {
 
 var pins = createPinObjects(8);
 
+// Выбираем HTML-шаблон
 var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
 
+// Шаблон карточки объявления
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-// Функция заполнения тэгов li текстовыми значениями из массива FEATURES
+// 8. Функция заполнения тэгов li текстовыми значениями из массива FEATURES
 var createTagContent = function (arr) {
   var fragment = new DocumentFragment();
   arr.forEach(function (item) {
@@ -123,7 +129,7 @@ var createTagContent = function (arr) {
   return fragment;
 };
 
-// Функция заполнения атрибутов src значениями из массива PHOTOS
+// 9. Функция заполнения атрибутов src значениями из массива PHOTOS
 var addSrcAttributtes = function (arr) {
   var fragment = new DocumentFragment();
   var elems = cardTemplate.querySelector('.popup__photos');
@@ -137,7 +143,7 @@ var addSrcAttributtes = function (arr) {
   return fragment;
 };
 
-// Функция создания DOM-элемента на основе JS-объекта
+// 10. Функция создания DOM-элемента на основе JS-объекта
 var renderPin = function (pinValues) {
   var pinElement = pinsTemplate.cloneNode(true);
   pinElement.style = 'left: ' + pinValues.location.x + 'px; top: ' + pinValues.location.y + 'px;';
@@ -146,7 +152,7 @@ var renderPin = function (pinValues) {
   return pinElement;
 };
 
-// Функция создания DOM-элемента объявления на основе JS-объекта
+// 7. Функция создания DOM-элемента объявления на основе JS-объекта
 var renderOffer = function (cardValues) {
   var cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.popup__title').textContent = cardValues.offer.title;
@@ -164,11 +170,13 @@ var renderOffer = function (cardValues) {
   return cardElement;
 };
 
+// Переменной card присваиваем сгенерированную карточку, первую из массива
 var card = renderOffer(pins[0]);
 var map = document.querySelector('.map').querySelector('.map__filters-container');
 
 var fragment = document.createDocumentFragment();
 
+// Вставляем сгенерированные пины в DOM
 pins.forEach(function (item) {
   fragment.appendChild(renderPin(item));
 });
@@ -186,25 +194,26 @@ for (var i = 0; i < fields.length; i++) {
   fields[i].setAttribute('disabled', 'disabled');
 }
 
-// Функция получения координат нажатия мыши
+// 13. Функция получения координат нажатия мыши
 var captureCoords = function (evt) {
   var x = evt.clientX;
   var y = evt.clientY;
   return [x, y];
 };
 
-// Функция ввода координат в поле адреса
+// 12. Функция ввода координат в поле адреса
 var introCoords = function (evt) {
   address.value = captureCoords(evt);
 };
 
-// Функция активации полей fieldset
+// 14. Функция активации полей fieldset
 var toogleFields = function (arr) {
   arr.forEach(function (item) {
     item.removeAttribute('disabled');
   });
 };
 
+// 13. Callback-функция активации карты
 var enableMap = function () {
   mapPoint.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
@@ -213,12 +222,14 @@ var enableMap = function () {
   map.insertAdjacentElement('beforebegin', card);
 };
 
+// 11. Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
 pinMain.addEventListener('keydown', function (evt) {
   if (evt.key === ENTER_KEY) {
     enableMap();
   }
 });
 
+// 11а. Обработчик нажатия левой клавиши мыши и активация карты (вызов Callback-функции enableMap)
 pinMain.addEventListener('mousedown', function (evt) {
   if (evt.which === 1) {
     enableMap();
