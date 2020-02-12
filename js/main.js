@@ -170,7 +170,7 @@ var renderOffer = function (cardValues) {
   return cardElement;
 };
 
-// Переменной card присваиваем сгенерированную карточку, первую из массива
+// Переменной card присваиваем сгенерированную карточку
 var card = renderOffer(pins[MAX_NUMBER]);
 var map = document.querySelector('.map').querySelector('.map__filters-container');
 
@@ -186,8 +186,6 @@ var pinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var fields = document.querySelectorAll('[name="fieldset"]');
 var address = document.querySelector('#address');
-var mapCard = document.querySelector('.map__card');
-
 
 mapPoint.classList.add('map--faded');
 adForm.classList.add('ad-form--disabled');
@@ -217,6 +215,10 @@ var toogleFields = function (arr) {
 
 var insertCardToMap = function () {
   map.insertAdjacentElement('beforebegin', card);
+  var popUpClose = document.querySelector('.popup__close');
+  popUpClose.addEventListener('click', function () {
+    closeMap();
+  });
 };
 
 // 13. Callback-функция активации карты
@@ -241,7 +243,8 @@ var enableMap = function () {
 };
 
 var closeMap = function () {
-  mapCard.classList.add('background', 'red');
+  var popupCard = document.querySelector('.popup');
+  popupCard.setAttribute('')
 };
 
 // 11. Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
@@ -259,9 +262,5 @@ pinMain.addEventListener('mousedown', function (evt) {
   introCoords(evt);
 });
 
-var popUpClose = document.querySelector('.popup__close');
-console.log(popUpClose);
 
-popUpClose.addEventListener('click', function () {
-  closeMap();
-});
+
