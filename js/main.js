@@ -171,7 +171,7 @@ var renderOffer = function (cardValues) {
 };
 
 // Переменной card присваиваем сгенерированную карточку, первую из массива
-var card = renderOffer(pins[0]);
+var card = renderOffer(pins[MAX_NUMBER]);
 var map = document.querySelector('.map').querySelector('.map__filters-container');
 
 var fragment = document.createDocumentFragment();
@@ -186,6 +186,8 @@ var pinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var fields = document.querySelectorAll('[name="fieldset"]');
 var address = document.querySelector('#address');
+var mapCard = document.querySelector('.map__card');
+
 
 mapPoint.classList.add('map--faded');
 adForm.classList.add('ad-form--disabled');
@@ -213,13 +215,33 @@ var toogleFields = function (arr) {
   });
 };
 
+var insertCardToMap = function () {
+  map.insertAdjacentElement('beforebegin', card);
+};
+
 // 13. Callback-функция активации карты
 var enableMap = function () {
   mapPoint.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   toogleFields(fields);
   mapPins.appendChild(fragment);
-  map.insertAdjacentElement('beforebegin', card);
+  var pinTarget = mapPins.querySelectorAll('.map__pin');
+  pinTarget.forEach(function (item) {
+    item.addEventListener('mousedown', function (evt) {
+      if (evt.which === 1 && evt.target !== pinMain) {
+        insertCardToMap();
+      }
+    });
+    item.addEventListener('keydown', function (evt) {
+      if (evt.key === ENTER_KEY) {
+        insertCardToMap();
+      }
+    });
+  });
+};
+
+var closeMap = function () {
+  mapCard.classList.add('background', 'red');
 };
 
 // 11. Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
@@ -235,4 +257,11 @@ pinMain.addEventListener('mousedown', function (evt) {
     enableMap();
   }
   introCoords(evt);
+});
+
+var popUpClose = document.querySelector('.popup__close');
+console.log(popUpClose);
+
+popUpClose.addEventListener('click', function () {
+  closeMap();
 });
