@@ -171,8 +171,8 @@ var renderOffer = function (cardValues) {
 };
 
 // Переменной card присваиваем сгенерированную карточку
-var card = renderOffer(pins[6]);
-
+var card = renderOffer(pins[getRandomNumber(getArray(MAX_NUMBER+2))]);
+console.log(card);
 var map = document.querySelector('.map').querySelector('.map__filters-container');
 
 var fragment = document.createDocumentFragment();
