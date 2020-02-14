@@ -66,7 +66,6 @@ function getArray(num) {
 
 // 5. Функция заполнения массива случайной длины
 var getRandomArray = function (arr) {
-  // var number = getRandomValue(1, arr.length);
   var arrItems = [];
   arr.forEach(function (item) {
     arrItems.push(item);
@@ -170,9 +169,6 @@ var renderOffer = function (cardValues) {
   return cardElement;
 };
 
-// Переменной card присваиваем сгенерированную карточку
-var card = renderOffer(pins[getRandomNumber(getArray(MAX_NUMBER+2))]);
-console.log(card);
 var map = document.querySelector('.map').querySelector('.map__filters-container');
 
 var fragment = document.createDocumentFragment();
@@ -214,8 +210,16 @@ var toogleFields = function (arr) {
   });
 };
 
+// Переменной card присваиваем сгенерированную карточку
+var card = function (arr) {
+  i = 0;
+  var x = renderOffer(arr[i]);
+  return x;
+};
+
 var insertCardToMap = function () {
-  map.insertAdjacentElement('beforebegin', card);
+  var cardItem = fragment.appendChild(card(pins));
+  map.insertAdjacentElement('beforebegin', cardItem);
   var popUpClose = document.querySelector('.popup__close');
   popUpClose.addEventListener('click', function () {
     closeMap();
