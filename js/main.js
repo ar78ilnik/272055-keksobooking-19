@@ -143,13 +143,21 @@ var addSrcAttributtes = function (arr) {
 };
 
 // 10. Функция создания DOM-элемента на основе JS-объекта
-var renderPin = function (pinValues) {
+var renderPin = function (pinValues, index) {
   var pinElement = pinsTemplate.cloneNode(true);
   pinElement.style = 'left: ' + pinValues.location.x + 'px; top: ' + pinValues.location.y + 'px;';
   pinElement.firstChild.src = pinValues.author.avatar;
   pinElement.firstChild.alt = pinValues.offer.type;
+  pinElement.setAttribute('data-id', index);
   return pinElement;
 };
+
+var fragment = document.createDocumentFragment();
+
+// Вставляем сгенерированные пины в DOM
+pins.forEach(function (item, index) {
+  fragment.appendChild(renderPin(item, index));
+});
 
 // 7. Функция создания DOM-элемента объявления на основе JS-объекта
 var renderOffer = function (cardValues) {
@@ -170,14 +178,6 @@ var renderOffer = function (cardValues) {
 };
 
 var map = document.querySelector('.map').querySelector('.map__filters-container');
-
-var fragment = document.createDocumentFragment();
-
-// Вставляем сгенерированные пины в DOM
-pins.forEach(function (item) {
-  fragment.appendChild(renderPin(item));
-});
-
 var mapPoint = document.querySelector('.map');
 var pinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
@@ -267,4 +267,3 @@ pinMain.addEventListener('mousedown', function (evt) {
   }
   introCoords(evt);
 });
-
