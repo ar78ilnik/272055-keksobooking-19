@@ -210,15 +210,8 @@ var toogleFields = function (arr) {
   });
 };
 
-// Переменной card присваиваем сгенерированную карточку
-var card = function (arr) {
-  i = 0;
-  var x = renderOffer(arr[i]);
-  return x;
-};
-
-var insertCardToMap = function () {
-  var cardItem = fragment.appendChild(card(pins));
+var insertCardToMap = function (numberId) {
+  var cardItem = fragment.appendChild(renderOffer(pins[numberId]));
   map.insertAdjacentElement('beforebegin', cardItem);
   var popUpClose = document.querySelector('.popup__close');
   popUpClose.addEventListener('click', function () {
@@ -237,7 +230,7 @@ var enableMap = function () {
   pinTarget.forEach(function (item) {
     item.addEventListener('mousedown', function (evt) {
       if (evt.which === 1 && evt.target !== mainTarget) {
-        insertCardToMap();
+        insertCardToMap(evt.currentTarget.dataset.id);
       }
     });
     item.addEventListener('keydown', function (evt) {
