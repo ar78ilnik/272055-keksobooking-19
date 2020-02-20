@@ -229,8 +229,8 @@ var insertCardToMap = function (numberId) {
   var cardItem = fragment.appendChild(renderOffer(pins[numberId]));
   map.insertAdjacentElement('beforebegin', cardItem);
   var popUpClose = document.querySelector('.popup__close');
-  popUpClose.addEventListener('click', function (evt) {
-      closeMap();
+  popUpClose.addEventListener('click', function () {
+    closeMap();
   });
   popUpClose.addEventListener('keydown', function (evt) {
     if (evt.key === ESC_KEY) {
@@ -254,6 +254,7 @@ var enableMap = function () {
       }
     });
     item.addEventListener('keydown', function (evt) {
+
       if (evt.key === ENTER_KEY) {
         insertCardToMap();
       }
@@ -263,7 +264,7 @@ var enableMap = function () {
 
 var closeMap = function () {
   var popUpCard = document.querySelector('.popup');
-    popUpCard.remove();
+  popUpCard.remove();
 };
 
 // 11. Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
@@ -283,10 +284,10 @@ pinMain.addEventListener('mousedown', function (evt) {
 
 idType.addEventListener('change', onHouseTypeChange);
 
-idTimeIn.addEventListener('change',  function (evt) {
+idTimeIn.addEventListener('change', function (evt) {
   idTimeOut.value = evt.target.value;
 });
 
-idTimeOut.addEventListener('change',  function (evt) {
+idTimeOut.addEventListener('change', function (evt) {
   idTimeIn.value = evt.target.value;
 });
