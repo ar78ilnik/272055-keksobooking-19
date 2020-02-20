@@ -31,6 +31,12 @@ var SETTYPE = {
   house: 'Дом',
   palace: 'Дворец'
 };
+var minHousePrices = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000
+};
 var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
@@ -183,7 +189,15 @@ var pinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var fields = document.querySelectorAll('[name="fieldset"]');
 var address = document.querySelector('#address');
+var idType = adForm.querySelector('#type');
+var idPrice = adForm.querySelector('#price');
+var idTimeIn = adForm.querySelector('#timein');
+var idTimeOut = adForm.querySelector('#timeout');
 
+var onHouseTypeChange = function (evt) {
+  idPrice.placeholder = minHousePrices[evt.currentTarget.value];
+  idPrice.min = minHousePrices[evt.currentTarget.value];
+};
 mapPoint.classList.add('map--faded');
 adForm.classList.add('ad-form--disabled');
 
@@ -260,3 +274,5 @@ pinMain.addEventListener('mousedown', function (evt) {
   }
   introCoords(evt);
 });
+
+idType.addEventListener('change', onHouseTypeChange);
