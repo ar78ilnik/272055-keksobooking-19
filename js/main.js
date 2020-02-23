@@ -138,7 +138,8 @@ var createTagContent = function (arr) {
 // 9. Функция заполнения атрибутов src значениями из массива PHOTOS
 var addSrcAttributtes = function (arr) {
   var fragment = new DocumentFragment();
-  var elems = cardTemplate.querySelector('.popup__photos');
+  var t = cardTemplate.cloneNode(true);
+  var elems = t.querySelector('.popup__photos');
   var elem = elems.querySelector('.popup__photo');
   elems.innerHTML = '';
   arr.forEach(function (item) {
@@ -254,9 +255,8 @@ var enableMap = function () {
       }
     });
     item.addEventListener('keydown', function (evt) {
-
       if (evt.key === ENTER_KEY) {
-        insertCardToMap();
+        insertCardToMap(evt.currentTarget.dataset.id);
       }
     });
   });
