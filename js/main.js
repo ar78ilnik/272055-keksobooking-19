@@ -43,86 +43,22 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
+var fragment = document.createDocumentFragment();
 
-// 1. Функция создания аватара
-function createAvatarValue(index) {
-  return 'img/avatars/user0' + index + '.png';
-}
+window.MAX_NUMBER = MAX_NUMBER;
+window.MAX_PRICES = MAX_PRICES;
+window.X_MIN = X_MIN;
+window.X_MAX = X_MAX;
+window.Y_MIN = Y_MIN;
+window.Y_MAX = Y_MAX;
+window.TYPES = TYPES;
+window.TIMES_CHECK = TIMES_CHECK;
+window.FEATURES = FEATURES;
+window.PHOTOS = PHOTOS;
+window.SETTYPE = SETTYPE;
+window.fragment = fragment;
 
-// 2. Функции генерации случайных данных
-var getRandomNumber = function (values) {
-  var index = Math.floor(Math.random() * values.length);
-  return values[index];
-};
-
-// 3
-var getRandomValue = function (min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-};
-
-// 6
-function getArray(num) {
-  var newArr = [];
-  var i = 0;
-  while (i <= num) {
-    newArr.push(i);
-    i++;
-  }
-  return newArr;
-}
-
-// 5. Функция заполнения массива случайной длины
-var getRandomArray = function (arr) {
-  var arrItems = [];
-  arr.forEach(function (item) {
-    arrItems.push(item);
-  });
-  return arrItems;
-};
-
-// 4
-// Функцию заполнения блока DOM-элементами на основе массива JS-объектов
-// Шаблон для создания пина. Понадобится в дальнейшем для вставки в DOM
-var createPinObjects = function (pinsCount) {
-  var ArrayPins = [];
-  for (var i = 0; i < pinsCount; i++) {
-    var pin = {
-      author: {avatar: createAvatarValue(i + 1)},
-      offer: {
-        title: getRandomNumber(TYPES),
-        address: {
-          x: getRandomValue(X_MIN, X_MAX),
-          y: getRandomValue(Y_MIN, Y_MAX)
-        },
-        price: getRandomNumber(getArray(MAX_PRICES)),
-        type: getRandomNumber(TYPES),
-        rooms: getRandomNumber(getArray(MAX_NUMBER)),
-        guests: getRandomNumber(getArray(MAX_NUMBER)),
-        checkin: getRandomNumber(TIMES_CHECK),
-        checkout: getRandomNumber(TIMES_CHECK),
-        features: getRandomArray(FEATURES),
-        description: getRandomNumber(TYPES),
-        photos: getRandomArray(PHOTOS)
-      },
-      location: {
-        x: getRandomValue(X_MIN, X_MAX),
-        y: getRandomValue(Y_MIN, Y_MAX)
-      }
-    };
-    ArrayPins.push(pin);
-  }
-  return ArrayPins;
-};
-
-var pins = createPinObjects(8);
-
-// Выбираем HTML-шаблон
-var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
-
-// Шаблон карточки объявления
-var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-
 // 8. Функция заполнения тэгов li текстовыми значениями из массива FEATURES
 var createTagContent = function (arr) {
   var fragment = new DocumentFragment();
@@ -133,56 +69,6 @@ var createTagContent = function (arr) {
     fragment.appendChild(li);
   });
   return fragment;
-};
-
-// 9. Функция заполнения атрибутов src значениями из массива PHOTOS
-var addSrcAttributtes = function (arr) {
-  var fragment = new DocumentFragment();
-  var t = cardTemplate.cloneNode(true);
-  var elems = t.querySelector('.popup__photos');
-  var elem = elems.querySelector('.popup__photo');
-  elems.innerHTML = '';
-  arr.forEach(function (item) {
-    var elem2 = elem.cloneNode(true);
-    elem2.src = item;
-    fragment.appendChild(elem2);
-  });
-  return fragment;
-};
-
-// 10. Функция создания DOM-элемента на основе JS-объекта
-var renderPin = function (pinValues, index) {
-  var pinElement = pinsTemplate.cloneNode(true);
-  pinElement.style = 'left: ' + pinValues.location.x + 'px; top: ' + pinValues.location.y + 'px;';
-  pinElement.firstChild.src = pinValues.author.avatar;
-  pinElement.firstChild.alt = pinValues.offer.type;
-  pinElement.setAttribute('data-id', index);
-  return pinElement;
-};
-
-var fragment = document.createDocumentFragment();
-
-// Вставляем сгенерированные пины в DOM
-pins.forEach(function (item, index) {
-  fragment.appendChild(renderPin(item, index));
-});
-
-// 7. Функция создания DOM-элемента объявления на основе JS-объекта
-var renderOffer = function (cardValues) {
-  var cardElement = cardTemplate.cloneNode(true);
-  cardElement.querySelector('.popup__title').textContent = cardValues.offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = cardValues.offer.address.x + cardValues.offer.address.y;
-  cardElement.querySelector('.popup__text--price').textContent = cardValues.offer.price + ' ₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = SETTYPE[cardValues.offer.type];
-  cardElement.querySelector('.popup__text--capacity').textContent = cardValues.offer.rooms + ' комнаты ' + cardValues.offer.guests + ' гостей';
-  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardValues.offer.checkin + ', выезд до ' + cardValues.offer.checkout;
-  cardElement.querySelector('.popup__features').innerHTML = '';
-  cardElement.querySelector('.popup__features').appendChild(createTagContent(FEATURES));
-  cardElement.querySelector('.popup__description').textContent = cardValues.offer.description;
-  cardElement.querySelector('.popup__photos').appendChild(addSrcAttributtes(PHOTOS));
-  cardElement.querySelector('.popup__photos').removeChild(cardElement.querySelector('.popup__photo'));
-  cardElement.querySelector('.popup__avatar').src = cardValues.author.avatar;
-  return cardElement;
 };
 
 var map = document.querySelector('.map').querySelector('.map__filters-container');
