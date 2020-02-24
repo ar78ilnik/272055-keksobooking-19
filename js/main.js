@@ -251,6 +251,7 @@ var enableMap = function () {
   pinTarget.forEach(function (item) {
     item.addEventListener('mousedown', function (evt) {
       if (evt.which === 1 && evt.target !== mainTarget) {
+        closeMap();
         insertCardToMap(evt.currentTarget.dataset.id);
       }
     });
@@ -264,7 +265,9 @@ var enableMap = function () {
 
 var closeMap = function () {
   var popUpCard = document.querySelector('.popup');
-  popUpCard.remove();
+  if (!!popUpCard) {
+    popUpCard.remove();
+  }
 };
 
 // 11. Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
