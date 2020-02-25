@@ -51,6 +51,10 @@ var map = document.querySelector('.map').querySelector('.map__filters-container'
 var mapPoint = document.querySelector('.map');
 var adForm = document.querySelector('.ad-form');
 var fields = document.querySelectorAll('[name="fieldset"]');
+var address = document.querySelector('#address');
+var idType = adForm.querySelector('#type');
+var idTimeIn = adForm.querySelector('#timein');
+var idTimeOut = adForm.querySelector('#timeout');
 
 window.MAX_NUMBER = MAX_NUMBER;
 window.MAX_PRICES = MAX_PRICES;
@@ -74,9 +78,7 @@ window.map = map;
 window.mapPoint = mapPoint;
 window.adForm = adForm;
 window.fields = fields;
-
-
-var address = document.querySelector('#address');
-var idType = adForm.querySelector('#type');
-var idTimeIn = adForm.querySelector('#timein');
-var idTimeOut = adForm.querySelector('#timeout');
+window.address = address;
+window.idType = idType;
+window.idTimeIn = idTimeIn;
+window.idTimeOut = idTimeOut;
