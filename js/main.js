@@ -43,33 +43,6 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
-var fragment = document.createDocumentFragment();
-
-window.MAX_NUMBER = MAX_NUMBER;
-window.MAX_PRICES = MAX_PRICES;
-window.X_MIN = X_MIN;
-window.X_MAX = X_MAX;
-window.Y_MIN = Y_MIN;
-window.Y_MAX = Y_MAX;
-window.TYPES = TYPES;
-window.TIMES_CHECK = TIMES_CHECK;
-window.FEATURES = FEATURES;
-window.PHOTOS = PHOTOS;
-window.SETTYPE = SETTYPE;
-window.fragment = fragment;
-
-var mapPins = document.querySelector('.map__pins');
-// 8. Функция заполнения тэгов li текстовыми значениями из массива FEATURES
-var createTagContent = function (arr) {
-  var fragment = new DocumentFragment();
-  arr.forEach(function (item) {
-    var li = document.createElement('li');
-    li.classList.add('popup__feature');
-    li.classList.add('popup__feature--' + item);
-    fragment.appendChild(li);
-  });
-  return fragment;
-};
 
 var map = document.querySelector('.map').querySelector('.map__filters-container');
 var mapPoint = document.querySelector('.map');
@@ -137,13 +110,12 @@ var enableMap = function () {
   pinTarget.forEach(function (item) {
     item.addEventListener('mousedown', function (evt) {
       if (evt.which === 1 && evt.target !== mainTarget) {
-        closeMap();
         insertCardToMap(evt.currentTarget.dataset.id);
       }
     });
     item.addEventListener('keydown', function (evt) {
       if (evt.key === ENTER_KEY) {
-        insertCardToMap(evt.currentTarget.dataset.id);
+        insertCardToMap();
       }
     });
   });
@@ -151,9 +123,7 @@ var enableMap = function () {
 
 var closeMap = function () {
   var popUpCard = document.querySelector('.popup');
-  if (!!popUpCard) {
-    popUpCard.remove();
-  }
+  popUpCard.remove();
 };
 
 // 11. Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
