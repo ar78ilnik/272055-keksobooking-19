@@ -43,6 +43,27 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
+var fragment = document.createDocumentFragment();
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
+window.MAX_NUMBER = MAX_NUMBER;
+window.MAX_PRICES = MAX_PRICES;
+window.X_MIN = X_MIN;
+window.X_MAX = X_MAX;
+window.Y_MIN = Y_MIN;
+window.Y_MAX = Y_MAX;
+window.ENTER_KEY = ENTER_KEY;
+window.ESC_KEY = ESC_KEY;
+window.TYPES = TYPES;
+window.TIMES_CHECK = TIMES_CHECK;
+window.FEATURES = FEATURES;
+window.SETTYPE = SETTYPE;
+window.minHousePrices = minHousePrices;
+window.PHOTOS = PHOTOS;
+window.fragment = fragment;
+window.cardTemplate = cardTemplate;
+window.pinsTemplate = pinsTemplate;
 
 var map = document.querySelector('.map').querySelector('.map__filters-container');
 var mapPoint = document.querySelector('.map');
@@ -51,102 +72,5 @@ var adForm = document.querySelector('.ad-form');
 var fields = document.querySelectorAll('[name="fieldset"]');
 var address = document.querySelector('#address');
 var idType = adForm.querySelector('#type');
-var idPrice = adForm.querySelector('#price');
 var idTimeIn = adForm.querySelector('#timein');
 var idTimeOut = adForm.querySelector('#timeout');
-
-var onHouseTypeChange = function (evt) {
-  idPrice.placeholder = minHousePrices[evt.currentTarget.value];
-  idPrice.min = minHousePrices[evt.currentTarget.value];
-};
-mapPoint.classList.add('map--faded');
-adForm.classList.add('ad-form--disabled');
-
-for (var i = 0; i < fields.length; i++) {
-  fields[i].setAttribute('disabled', 'disabled');
-}
-
-// 13. Функция получения координат нажатия мыши
-var captureCoords = function (evt) {
-  var x = evt.clientX;
-  var y = evt.clientY;
-  return [x, y];
-};
-
-// 12. Функция ввода координат в поле адреса
-var introCoords = function (evt) {
-  address.value = captureCoords(evt);
-};
-
-// 14. Функция активации полей fieldset
-var toogleFields = function (arr) {
-  arr.forEach(function (item) {
-    item.removeAttribute('disabled');
-  });
-};
-
-var insertCardToMap = function (numberId) {
-  var cardItem = fragment.appendChild(renderOffer(pins[numberId]));
-  map.insertAdjacentElement('beforebegin', cardItem);
-  var popUpClose = document.querySelector('.popup__close');
-  popUpClose.addEventListener('click', function () {
-    closeMap();
-  });
-  popUpClose.addEventListener('keydown', function (evt) {
-    if (evt.key === ESC_KEY) {
-      closeMap();
-    }
-  });
-};
-
-// 13. Callback-функция активации карты
-var enableMap = function () {
-  mapPoint.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  toogleFields(fields);
-  mapPins.appendChild(fragment);
-  var pinTarget = mapPins.querySelectorAll('.map__pin');
-  var mainTarget = document.querySelector('.map__pin--main').firstElementChild;
-  pinTarget.forEach(function (item) {
-    item.addEventListener('mousedown', function (evt) {
-      if (evt.which === 1 && evt.target !== mainTarget) {
-        insertCardToMap(evt.currentTarget.dataset.id);
-      }
-    });
-    item.addEventListener('keydown', function (evt) {
-      if (evt.key === ENTER_KEY) {
-        insertCardToMap();
-      }
-    });
-  });
-};
-
-var closeMap = function () {
-  var popUpCard = document.querySelector('.popup');
-  popUpCard.remove();
-};
-
-// 11. Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
-pinMain.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    enableMap();
-  }
-});
-
-// 11а. Обработчик нажатия левой клавиши мыши и активация карты (вызов Callback-функции enableMap)
-pinMain.addEventListener('mousedown', function (evt) {
-  if (evt.which === 1) {
-    enableMap();
-  }
-  introCoords(evt);
-});
-
-idType.addEventListener('change', onHouseTypeChange);
-
-idTimeIn.addEventListener('change', function (evt) {
-  idTimeOut.value = evt.target.value;
-});
-
-idTimeOut.addEventListener('change', function (evt) {
-  idTimeIn.value = evt.target.value;
-});

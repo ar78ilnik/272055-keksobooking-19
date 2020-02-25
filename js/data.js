@@ -37,38 +37,38 @@
     }
     return newArr;
   }
-  // Функция заполнения блока DOM-элементами на основе массива JS-объектов
 
-  window.data = {
-    isObtainPinsArray: function (pinsCount) {
-      var ArrayPins = [];
-      for (var i = 0; i < pinsCount; i++) {
-        var pin = {
-          author: {avatar: createAvatarValue(i + 1)},
-          offer: {
-            title: getRandomNumber(window.TYPES),
-            address: {
-              x: getRandomValue(window.X_MIN, window.X_MAX),
-              y: getRandomValue(window.Y_MIN, window.Y_MAX)
-            },
-            price: getRandomNumber(getArray(window.MAX_PRICES)),
-            type: getRandomNumber(window.TYPES),
-            rooms: getRandomNumber(getArray(window.MAX_NUMBER)),
-            guests: getRandomNumber(getArray(window.MAX_NUMBER)),
-            checkin: getRandomNumber(window.TIMES_CHECK),
-            checkout: getRandomNumber(window.TIMES_CHECK),
-            features: getRandomArray(window.FEATURES),
-            description: getRandomNumber(window.TYPES),
-            photos: getRandomArray(window.PHOTOS)
-          },
-          location: {
+// Функция заполнения блока DOM-элементами на основе массива JS-объектов
+window.data = {
+  isObtainPinsArray: function (pinsCount) {
+    var ArrayPins = [];
+    for (var i = 0; i < pinsCount; i++) {
+      var pin = {
+        author: {avatar: createAvatarValue(i + 1)},
+        offer: {
+          title: getRandomNumber(window.TYPES),
+          address: {
             x: getRandomValue(window.X_MIN, window.X_MAX),
             y: getRandomValue(window.Y_MIN, window.Y_MAX)
-          }
-        };
-        ArrayPins.push(pin);
-      }
-      return ArrayPins;
+          },
+          price: getRandomNumber(getArray(window.MAX_PRICES)),
+          type: getRandomNumber(window.TYPES),
+          rooms: getRandomNumber(getArray(window.MAX_NUMBER)),
+          guests: getRandomNumber(getArray(window.MAX_NUMBER)),
+          checkin: getRandomNumber(window.TIMES_CHECK),
+          checkout: getRandomNumber(window.TIMES_CHECK),
+          features: getRandomArray(window.FEATURES),
+          description: getRandomNumber(window.TYPES),
+          photos: getRandomArray(window.PHOTOS)
+        },
+        location: {
+          x: getRandomValue(window.X_MIN, window.X_MAX),
+          y: getRandomValue(window.Y_MIN, window.Y_MAX)
+        }
+      };
+      ArrayPins.push(pin);
     }
-  };
+    return ArrayPins;
+  }
+};
 })();
