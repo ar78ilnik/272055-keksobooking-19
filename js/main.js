@@ -46,6 +46,11 @@ var PHOTOS = [
 var fragment = document.createDocumentFragment();
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var pinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var pinMain = document.querySelector('.map__pin--main');
+var map = document.querySelector('.map').querySelector('.map__filters-container');
+var mapPoint = document.querySelector('.map');
+var adForm = document.querySelector('.ad-form');
+var fields = document.querySelectorAll('[name="fieldset"]');
 
 window.MAX_NUMBER = MAX_NUMBER;
 window.MAX_PRICES = MAX_PRICES;
@@ -64,12 +69,13 @@ window.PHOTOS = PHOTOS;
 window.fragment = fragment;
 window.cardTemplate = cardTemplate;
 window.pinsTemplate = pinsTemplate;
+window.pinMain = pinMain;
+window.map = map;
+window.mapPoint = mapPoint;
+window.adForm = adForm;
+window.fields = fields;
 
-var map = document.querySelector('.map').querySelector('.map__filters-container');
-var mapPoint = document.querySelector('.map');
-var pinMain = document.querySelector('.map__pin--main');
-var adForm = document.querySelector('.ad-form');
-var fields = document.querySelectorAll('[name="fieldset"]');
+
 var address = document.querySelector('#address');
 var idType = adForm.querySelector('#type');
 var idTimeIn = adForm.querySelector('#timein');
