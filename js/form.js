@@ -32,19 +32,14 @@
     window.idTimeIn.value = evt.target.value;
   });
 
-  // Объект ввода координат в поле адреса
   window.form = {
     introCoords: function (evt) {
       window.address.value = window.captureCoords(evt);
-    }
-  };
-
-  // Объект активации полей fieldset
-  window.form = {
+    },
     toogleFields: function (arr) {
       arr.forEach(function (item) {
         item.removeAttribute('disabled');
-      }
+      });
     }
   };
 })();

@@ -28,6 +28,7 @@
     });
     return fragment;
   };
+
   // Функция создания DOM-элемента объявления на основе JS-объекта
   window.card = {
     renderOffer: function (cardValues) {
