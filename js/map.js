@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+
+  var inited = false;
   var pins = window.data.isObtainPinsArray(8);
 
   // Выбираем HTML-шаблон
@@ -23,7 +25,61 @@
     if (evt.which === 1) {
       enableMap();
     }
-    window.form.introCoords(evt);
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      var pinPosition = {
+        x: window.pinMain.offsetLeft - shift.x,
+        y: window.pinMain.offsetTop - shift.y
+      };
+
+      var border = {
+        TOP: mapLimits.yMin - pinMain.offsetHeight,
+        BOTTOM: mapLimits.yMax,
+        LEFT: mapLimits.xMin,
+        RIGHT: mapLimits.xMax - window.pinMain.offsetWidth
+      };
+
+      if (pinPosition.x > border.LEFT && pinPosition.x <= border.RIGHT) {
+        window.pinMain.style.left = pinPosition.x + 'px';
+      }
+      if (pinPosition.y > border.TOP && pinPosition.y <= border.BOTTOM) {
+        window.pinMain.style.top = pinPosition.y + 'px';
+      }
+
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+      if(!inited) {
+        window.form.introCoords(upEvt);
+      }
+
+      inited = true;
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
 
   var closeMap = function () {
@@ -65,7 +121,8 @@
       });
       item.addEventListener('keydown', function (evt) {
         if (evt.key === window.ENTER_KEY) {
-          insertCardToMap();
+          closeMap();
+          insertCardToMap(evt.currentTarget.dataset.id);
         }
       });
     });

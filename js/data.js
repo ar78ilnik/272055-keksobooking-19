@@ -40,6 +40,12 @@
     house: 5000,
     palace: 10000
   };
+  var mapLimits = {
+    yMin: 0,
+    xMin: 0,
+    yMax: 630,
+    xMax: 1200
+  };
   var PHOTOS = [
     'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
@@ -85,6 +91,7 @@
   window.idType = idType;
   window.idTimeIn = idTimeIn;
   window.idTimeOut = idTimeOut;
+  window.mapLimits = mapLimits;
 
   // Функция создания аватара
   function createAvatarValue(index) {
