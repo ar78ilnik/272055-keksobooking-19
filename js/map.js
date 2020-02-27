@@ -59,6 +59,7 @@
     pinTarget.forEach(function (item) {
       item.addEventListener('mousedown', function (evt) {
         if (evt.which === 1 && evt.target !== mainTarget) {
+          closeMap();
           insertCardToMap(evt.currentTarget.dataset.id);
         }
       });
