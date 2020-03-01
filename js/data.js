@@ -131,30 +131,27 @@
 
   // Функция заполнения блока DOM-элементами на основе массива JS-объектов
   window.data = {
-    isObtainPinsArray: function (pinsCount) {
+    isObtainPinsArray: function (obj) {
       var ArrayPins = [];
-      for (var i = 0; i < pinsCount; i++) {
+      for (var i = 0; i < obj.length; i++) {
         var pin = {
-          author: {avatar: createAvatarValue(i + 1)},
+          author: obj.author.avatar,
           offer: {
-            title: getRandomNumber(window.TYPES),
-            address: {
-              x: getRandomValue(window.X_MIN, window.X_MAX),
-              y: getRandomValue(window.Y_MIN, window.Y_MAX)
-            },
-            price: getRandomNumber(getArray(window.MAX_PRICES)),
-            type: getRandomNumber(window.TYPES),
-            rooms: getRandomNumber(getArray(window.MAX_NUMBER)),
-            guests: getRandomNumber(getArray(window.MAX_NUMBER)),
-            checkin: getRandomNumber(window.TIMES_CHECK),
-            checkout: getRandomNumber(window.TIMES_CHECK),
-            features: getRandomArray(window.FEATURES),
-            description: getRandomNumber(window.TYPES),
-            photos: getRandomArray(window.PHOTOS)
+            title: obj.offer.title,
+            address: obj.offer.address,
+            price: obj.offer.price,
+            type: obj.offer.type,
+            rooms: obj.offer.rooms,
+            guests: obj.offer.guests,
+            checkin: obj.offer.checkin,
+            checkout: obj.offer.checkout,
+            features: obj.features[1],
+            description: obj.description,
+            photos: obj.photos
           },
           location: {
-            x: getRandomValue(window.X_MIN, window.X_MAX),
-            y: getRandomValue(window.Y_MIN, window.Y_MAX)
+            x: obj.location.x,
+            y: obj.location.y
           }
         };
         ArrayPins.push(pin);

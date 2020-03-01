@@ -3,15 +3,16 @@
 (function () {
 
   var inited = false;
-  var pins = window.data.isObtainPinsArray(8);
+
+  var onLoad = function (arr) {
+    arr.forEach(function (item, index) {
+      window.fragment.appendChild(window.pin.renderPin(item, index));
+      console.log(index);
+    });
+  };
 
   // Выбираем HTML-шаблон
   var mapPins = document.querySelector('.map__pins');
-
-  // Вставляем сгенерированные пины в DOM
-  pins.forEach(function (item, index) {
-    window.fragment.appendChild(window.pin.renderPin(item, index));
-  });
 
   // Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
   window.pinMain.addEventListener('keydown', function (evt) {
@@ -22,8 +23,11 @@
 
   // Обработчик нажатия левой клавиши мыши и активация карты (вызов Callback-функции enableMap)
   window.pinMain.addEventListener('mousedown', function (evt) {
-    if (evt.which === 1) {
+    if (evt.which === 1 && !inited) {
       enableMap();
+      window.backend.download(onLoad);
+      console.log('2');
+      inited = true;
     }
     evt.preventDefault();
 
@@ -51,7 +55,7 @@
       };
 
       var border = {
-        TOP: mapLimits.yMin - pinMain.offsetHeight,
+        TOP: mapLimits.yMin - window.pinMain.offsetHeight,
         BOTTOM: mapLimits.yMax,
         LEFT: mapLimits.xMin,
         RIGHT: mapLimits.xMax - window.pinMain.offsetWidth
@@ -72,7 +76,7 @@
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
 
-      if(!inited) {
+      if (!inited) {
         window.form.introCoords(upEvt);
       }
 
