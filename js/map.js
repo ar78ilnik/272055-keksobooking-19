@@ -3,11 +3,11 @@
 (function () {
 
   var inited = false;
+  var enable = false;
 
   var onLoad = function (arr) {
     arr.forEach(function (item, index) {
       window.fragment.appendChild(window.pin.renderPin(item, index));
-      console.log(index);
     });
   };
 
@@ -23,11 +23,9 @@
 
   // Обработчик нажатия левой клавиши мыши и активация карты (вызов Callback-функции enableMap)
   window.pinMain.addEventListener('mousedown', function (evt) {
-    if (evt.which === 1 && !inited) {
+    if (evt.which === 1 && !enable) {
       enableMap();
       window.backend.download(onLoad);
-      console.log('2');
-      inited = true;
     }
     evt.preventDefault();
 
@@ -95,7 +93,7 @@
 
   // Функция вставки объявления на карту
   var insertCardToMap = function (numberId) {
-    var cardItem = window.fragment.appendChild(window.card.renderOffer(pins[numberId]));
+    var cardItem = window.fragment.appendChild(window.card.renderOffer(onLoad));
     window.map.insertAdjacentElement('beforebegin', cardItem);
     var popUpClose = document.querySelector('.popup__close');
     popUpClose.addEventListener('click', function () {
