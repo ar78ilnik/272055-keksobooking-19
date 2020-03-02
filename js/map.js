@@ -9,6 +9,7 @@
     arr.forEach(function (item, index) {
       window.fragment.appendChild(window.pin.renderPin(item, index));
     });
+    window.card.renderOffer(arr);
   };
 
   // Выбираем HTML-шаблон
@@ -93,7 +94,7 @@
 
   // Функция вставки объявления на карту
   var insertCardToMap = function (numberId) {
-    var cardItem = window.fragment.appendChild(window.card.renderOffer(onLoad));
+    var cardItem = window.fragment.appendChild(window.card.renderOffer(window.pin.renderPin.pinElement[numberId]));
     window.map.insertAdjacentElement('beforebegin', cardItem);
     var popUpClose = document.querySelector('.popup__close');
     popUpClose.addEventListener('click', function () {
