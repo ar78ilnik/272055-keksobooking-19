@@ -4,8 +4,10 @@
 
   var inited = false;
   var enable = false;
-  var arrPins;
-  window.arrPins = arrPins;
+
+  // Выбираем HTML-шаблон
+  var mapPins = document.querySelector('.map__pins');
+  // window.arrPins = arrPins;
   /*
   var onLoad = function (arr) {
     arr.forEach(function (item, index) {
@@ -16,19 +18,30 @@
   */
 
   var onLoad = function (arrDown) {
-    var arrPins = arrDown;
-    return arrPins;
-  }
+    window.arrPins = arrDown;
+    funcDownload(arrDown);
+  };
 
   var funcDownload = function (arr) {
-    window.arrPins.forEach(function (item, index) {
-      window.fragment.appendChild(window.pin.renderPin(item, index));
+    arr.forEach(function (item, index) {
+      var element = window.pin.renderPin(item, index);
+      element.addEventListener('mousedown', function (evt) {
+        if (evt.which === 1) {
+          closeMap();
+          insertCardToMap(evt.currentTarget.dataset.id);
+        }
+      });
+      element.addEventListener('keydown', function (evt) {
+        if (evt.key === window.ENTER_KEY) {
+          closeMap();
+          insertCardToMap(evt.currentTarget.dataset.id);
+        }
+      });
+      window.fragment.appendChild(element);
     });
-    window.card.renderOffer(arr);
-  }
-
-  // Выбираем HTML-шаблон
-  var mapPins = document.querySelector('.map__pins');
+    mapPins.appendChild(window.fragment);
+    // window.card.renderOffer(arr);
+  };
 
   // Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
   window.pinMain.addEventListener('keydown', function (evt) {
@@ -40,9 +53,7 @@
   // Обработчик нажатия левой клавиши мыши и активация карты (вызов Callback-функции enableMap)
   window.pinMain.addEventListener('mousedown', function (evt) {
     if (evt.which === 1 && !enable) {
-      enableMap();
-      arrPins = window.backend.download(onLoad);
-      funcDownload(arrPins);
+      window.backend.download(onLoad);
     }
     evt.preventDefault();
 
@@ -109,8 +120,15 @@
   };
 
   // Функция вставки объявления на карту
-  var insertCardToMap = function (numberId) {
-    var cardItem = window.fragment.appendChild(window.card.renderOffer(window.pin.renderPin.pinElement[numberId]));
+  var insertCardToMap = function () {
+
+    var elemntIzMassivaPInov = function () {
+      window.arrPins.forEach(function (item) {
+
+      });
+    };
+    var cardElement = window.card.renderOffer(elemntIzMassivaPInov);
+    var cardItem = window.fragment.appendChild(cardElement);
     window.map.insertAdjacentElement('beforebegin', cardItem);
     var popUpClose = document.querySelector('.popup__close');
     popUpClose.addEventListener('click', function () {
@@ -128,10 +146,10 @@
     window.mapPoint.classList.remove('map--faded');
     window.adForm.classList.remove('ad-form--disabled');
     window.form.toogleFields(window.fields);
-    mapPins.appendChild(window.fragment);
-    var pinTarget = mapPins.querySelectorAll('.map__pin');
     var mainTarget = document.querySelector('.map__pin--main').firstElementChild;
+    var pinTarget = mapPins.querySelectorAll('.map__pin');
     pinTarget.forEach(function (item) {
+      //
       item.addEventListener('mousedown', function (evt) {
         if (evt.which === 1 && evt.target !== mainTarget) {
           closeMap();
@@ -144,6 +162,7 @@
           insertCardToMap(evt.currentTarget.dataset.id);
         }
       });
+      //
     });
   };
 
