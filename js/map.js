@@ -4,13 +4,28 @@
 
   var inited = false;
   var enable = false;
-
+  var arrPins;
+  window.arrPins = arrPins;
+  /*
   var onLoad = function (arr) {
     arr.forEach(function (item, index) {
       window.fragment.appendChild(window.pin.renderPin(item, index));
     });
     window.card.renderOffer(arr);
   };
+  */
+
+  var onLoad = function (arrDown) {
+    var arrPins = arrDown;
+    return arrPins;
+  }
+
+  var funcDownload = function (arr) {
+    window.arrPins.forEach(function (item, index) {
+      window.fragment.appendChild(window.pin.renderPin(item, index));
+    });
+    window.card.renderOffer(arr);
+  }
 
   // Выбираем HTML-шаблон
   var mapPins = document.querySelector('.map__pins');
@@ -26,7 +41,8 @@
   window.pinMain.addEventListener('mousedown', function (evt) {
     if (evt.which === 1 && !enable) {
       enableMap();
-      window.backend.download(onLoad);
+      arrPins = window.backend.download(onLoad);
+      funcDownload(arrPins);
     }
     evt.preventDefault();
 
