@@ -40,7 +40,9 @@
       window.fragment.appendChild(element);
     });
     mapPins.appendChild(window.fragment);
-    // window.card.renderOffer(arr);
+
+    window.fragment.appendChild(window.card.renderOffer(cardValues));
+    window.data.map.appendChild(window.fragment);
   };
 
   // Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
@@ -122,11 +124,11 @@
   // Функция вставки объявления на карту
   var insertCardToMap = function () {
 
-    var elemntIzMassivaPInov = function () {
-      window.arrPins.forEach(function (item) {
-
-      });
-    };
+    arrPins.forEach(function (item) {
+      item.addEventListener('click', function () {
+        
+      })
+    });
     var cardElement = window.card.renderOffer(elemntIzMassivaPInov);
     var cardItem = window.fragment.appendChild(cardElement);
     window.map.insertAdjacentElement('beforebegin', cardItem);
