@@ -37,7 +37,7 @@
       cardElement.querySelector('.popup__text--capacity').textContent = cardValues.offer.rooms + ' комнаты для ' + cardValues.offer.guests + ' гостей';
       cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardValues.offer.checkin + ', выезд до ' + cardValues.offer.checkout;
       cardElement.querySelector('.popup__features').innerHTML = '';
-      cardElement.querySelector('.popup__features').appendChild(createTagFeaturesContent(cardValues));
+      // cardElement.querySelector('.popup__features').appendChild(createTagFeaturesContent(cardValues));
       cardElement.querySelector('.popup__description').textContent = cardValues.offer.description;
       cardElement.querySelector('.popup__photos').appendChild(addSrcAttributtes(window.PHOTOS));
       cardElement.querySelector('.popup__photos').removeChild(cardElement.querySelector('.popup__photo'));
@@ -46,8 +46,8 @@
     },
     renderCard: function () {
       var fragment = document.createDocumentFragment();
-      fragment.appendChild(renderOffer(cardValues));
-      window.pin.map.appendChild(fragment);
+      fragment.appendChild(window.card.renderOffer(window.arrPins));
+      window.data.mapPoint.appendChild(fragment);
     }
   };
 })();
