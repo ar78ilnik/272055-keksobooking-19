@@ -45,14 +45,13 @@
 
   // Обработчик нажатия клавиатуры и активация карты (вызов Callback-функции enableMap)
   window.pinMain.addEventListener('keydown', function (evt) {
-    if (evt.key === window.ENTER_KEY) {
       enableMap();
-    }
   });
 
   // Обработчик нажатия левой клавиши мыши и активация карты (вызов Callback-функции enableMap)
   window.pinMain.addEventListener('mousedown', function (evt) {
     if (evt.which === 1 && !enable) {
+      enableMap();
       window.backend.download(onLoad);
     }
     evt.preventDefault();

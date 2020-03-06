@@ -30,6 +30,7 @@
   window.card = {
     renderOffer: function (cardValues) {
       var cardElement = window.cardTemplate.cloneNode(true);
+      console.log(cardValues);
       cardElement.querySelector('.popup__title').textContent = cardValues.offer.title;
       cardElement.querySelector('.popup__text--address').textContent = cardValues.offer.address;
       cardElement.querySelector('.popup__text--price').textContent = cardValues.offer.price + ' ₽/ночь';
